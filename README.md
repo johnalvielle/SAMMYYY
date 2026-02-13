@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -390,9 +392,8 @@
             const maxX = window.innerWidth - noBtn.offsetWidth;
             const maxY = window.innerHeight - noBtn.offsetHeight;
             const newX = Math.random() * maxX;
-            const newY = Math.random() * maxY;
-            noBtn.style.position
-             = 'fixed';
+            const newY = Math.random() * maxY
+            noBtn.style.position = 'fixed';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
             noBtn.style.transition = 'all 0.5s ease'; // Smooth teleport
