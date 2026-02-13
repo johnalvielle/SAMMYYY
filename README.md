@@ -369,8 +369,7 @@
                 // Same proximity check
                 const bearRect = draggableBear.getBoundingClientRect();
                 const capyRect = targetCapybara.getBoundingClientRect();
-                const distance = Math.sqrt
-                ((bearRect.left - capyRect.left) ** 2 + (bearRect.top - capyRect.top) ** 2);
+                const distance = Math.sqrt((bearRect.left - capyRect.left) ** 2 + (bearRect.top - capyRect.top) ** 2);
                 if (distance < 120) {
                     document.getElementById('dragHint').style.display = 'none';
                     setTimeout(nextScene, 500);
@@ -392,7 +391,8 @@
             const maxY = window.innerHeight - noBtn.offsetHeight;
             const newX = Math.random() * maxX;
             const newY = Math.random() * maxY;
-            noBtn.style.position = 'fixed';
+            noBtn.style.position
+             = 'fixed';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
             noBtn.style.transition = 'all 0.5s ease'; // Smooth teleport
