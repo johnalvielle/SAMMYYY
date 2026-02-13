@@ -360,3 +360,86 @@
                 const touch = e.touches[0];
                 draggableBear.style.left = (touch.clientX - offsetX) + 'px';
                 draggableBear.style.top = (touch.clientY - offsetY) + 'px';
+            }
+        });
+
+        document.addEventListener('touchend', () => {
+            if (isDragging) {
+                isDragging = false;
+                // Same proximity check
+                const bearRect = draggableBear.getBoundingClientRect();
+                const capyRect = targetCapybara.getBoundingClientRect();
+                const distance = Math.sqrt((bearRect.left - capyRect.left) ** 2 + (bearRect.top - capyRect.top) ** 2);
+                if (distance < 120) {
+                    document.getElementById('dragHint').style.display = 'none';
+                    setTimeout(nextScene, 500);
+                }
+            }
+        });
+
+        // Scene 3: Click glowing heart to continue
+        const glowingHeart = document.getElementById('glowingHeart');
+        glowingHeart.addEventListener('click', () => {
+            document.getElementById('clickHint').style.display = 'none';
+            setTimeout(nextScene, 500);
+        });
+
+        // Scene 4: NO button runs away (enhanced avoidance)
+        const noBtn = document.getElementById('noBtn');
+        function moveNoBtn() {
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            noBtn.style.position = 'fixed';
+            noBtn.style.left =
+            newX + 'px';
+            noBtn.style.top = newY + 'px';
+            noBtn.style.transition = 'all 0.5s ease'; // Smooth teleport
+        }
+        noBtn.addEventListener('mouseover', moveNoBtn); // Avoid on hover
+        noBtn.addEventListener('click', moveNoBtn); // Avoid on click
+
+        // YES button: Trigger celebration
+        const yesBtn = document.getElementById('yesBtn');
+        const popup = document.getElementById('popup');
+        const celebration = document.querySelector('.celebration');
+
+        yesBtn.addEventListener('click', () => {
+            // Hide buttons and advance to celebration
+            document.querySelector('.buttons').style.display = 'none';
+            scenes[3].classList.remove('active'); // Hide Scene 4
+            scenes[4].classList.add('active'); // Show Scene 5
+            popup.style.display = 'flex';
+
+            // Add confetti
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                celebration.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 4000);
+            }
+
+            // Add burst hearts
+            for (let i = 0; i < 20; i++) {
+                const burstHeart = document.createElement('div');
+                burstHeart.className = 'burst-heart';
+                burstHeart.textContent = '💖';
+                burstHeart.style.left = Math.random() * 100 + '%';
+                burstHeart.style.top = Math.random() * 100 + '%';
+                burstHeart.style.animationDelay = Math.random() * 1 + 's';
+                celebration.appendChild(burstHeart);
+                setTimeout(() => burstHeart.remove(), 3000);
+            }
+        });
+
+        // Close popup on click
+        popup.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
